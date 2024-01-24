@@ -5,10 +5,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>What the Duck</title>
+    <title>PROJECT HUB</title>
+    <link rel="shortcut icon" type="image/png" href="{% static "favicon.ico" %}">
     <link rel="stylesheet" href="{% static 'css/dist/layout.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/dist/font.min.css' %}">
 </head>
 <body>
-    {% include 'header.html' %}
+    <nav>
+        {% include 'header.html' %}
+    </nav>
+    <div class="body">
+        <div class="test">Hello body</div>
+    </div>
 </body>
 </html>
