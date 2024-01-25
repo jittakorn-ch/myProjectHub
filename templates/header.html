@@ -5,8 +5,8 @@
         <img src="{% static "img/logo-image.png" %}" alt="Page Logo">
     </div>
     <div class="topnav">
-        <div>HOME</div>
-        <div>PROJECT</div>
+        <a href="{% url 'home' %}">HOME</a>
+        <a href="{% url 'project:project' %}">PROJECT</a>
         <div>PROFILE</div>
         <div>CONTACT</div>
     </div>

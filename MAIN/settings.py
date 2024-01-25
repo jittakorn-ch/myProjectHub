@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 
     "myProfile.apps.MyprofileConfig",
+    "project.apps.ProjectConfig",
 ]
 
 MIDDLEWARE = [
@@ -59,8 +60,8 @@ TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
-            join(BASE_DIR, 'templates'),
-            join(BASE_DIR, 'myProfile', 'templates')
+            join(BASE_DIR, "templates"),
+            join(BASE_DIR, "myProfile", "templates")
         ],
         "APP_DIRS": True,
         "OPTIONS": {
@@ -128,9 +129,10 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
-STATICFILES_DIRS = [
-    BASE_DIR / "static"
-]
+STATICFILES_DIRS = (
+    join(BASE_DIR, "static"),
+    join(BASE_DIR, "project", "static")
+)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
