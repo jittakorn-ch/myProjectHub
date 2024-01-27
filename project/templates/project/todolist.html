@@ -1,0 +1,38 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROJECT HUB</title>
+    <link rel="shortcut icon" type="image/png" href="{% static "favicon.ico" %}">
+    <link rel="stylesheet" href="{% static 'css/dist/layout.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/dist/font.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/dist/projectStyle.min.css' %}">
+</head>
+<body>
+    <nav>
+        {% include 'header.html' %}
+    </nav>
+    <div class="body">
+        <div class="project todolist">
+            <div class="todolist">
+                <div class="calendar">
+                    <div class="calendar-header">
+                        {% for day_name in calendar_info.weekdays %}
+                            <div class="cell">{{ day_name }}</div>
+                        {% endfor %}
+                    </div>
+                    {% for week in calendar_info.week_sublists %}
+                        <div class="week">
+                            {% for day in week %}
+                                <div class="cell">{% if day != 0 %}{{ day }}{% endif %}</div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

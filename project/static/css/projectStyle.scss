@@ -28,5 +28,51 @@
             width: 200px;
             height: 150px;
         }
-    };
+    }
+
+    .todolist {
+        width: 100%;
+        padding: 20px;
+
+        .calendar {
+            width: 100%;
+
+            .calendar-header {
+                display: flex;
+
+                .cell {
+                    height: 30px;
+                }
+            }
+
+            .week,
+            .calendar-header {
+                width: 100%;
+                display: flex;
+                border-right: 0.5px solid #000;
+                &.week:last-child {
+                    border-bottom: 0.5px solid #000;
+                }
+            }
+
+            .cell {
+                width: calc(100% / 7);
+                height: 100px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 5px;
+                box-sizing: border-box;
+                border: 0.5px solid #000;
+                border-right: 0;
+                border-bottom: 0;
+
+                &.cell:first-child,
+                &.cell:last-child{
+                    background-color: gray;
+                }
+            }
+        }
+    }
 }
+
