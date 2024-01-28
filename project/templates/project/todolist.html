@@ -19,20 +19,102 @@
         <div class="project todolist">
             <div class="todolist">
                 <div class="calendar">
-                    <div class="calendar-header">
-                        {% for day_name in calendar_info.weekdays %}
-                            <div class="cell">{{ day_name }}</div>
-                        {% endfor %}
+                    <div class="calendar-filter">
+                        <form id="filterYearMonth" action="{% url 'project:todolist' %}" method='post'>
+                            {% csrf_token %}
+                            <div class="year-month">
+                                <input type="hidden" class="month" name="month" value="{{ filters.month }}">
+                                <div class="button" onclick="adjustMonth(-1)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-math-lower" width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                        <path d="M19 18l-14 -6l14 -6" />
+                                    </svg>
+                                </div>
+                                <div class="month-display title">{{ month_name }}</div>
+                                <div class="button" onclick="adjustMonth(1)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-math-greater" width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                        <path d="M5 18l14 -6l-14 -6" />
+                                    </svg>
+                                </div>                                         
+                                <div class="button year-input">
+                                    <input type="number" class="year" name="year" value="{{ filters.year }}">
+                                </div>
+                                <div class="button" onclick="adjustMonth()" title="Reset to this month">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-restore" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3.06 13a9 9 0 1 0 .49 -4.087" /><path d="M3 4.001v5h5" />
+                                        <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+                                    </svg>
+                                </div> 
+                            </div>
+                        </form>
                     </div>
-                    {% for week in calendar_info.week_sublists %}
-                        <div class="week">
-                            {% for day in week %}
-                                <div class="cell">{% if day != 0 %}{{ day }}{% endif %}</div>
+                    <div class="calendar-table">
+                        <div class="calendar-header">
+                            {% for day_name in calendar_info.weekdays %}
+                                <div class="cell">{{ day_name }}</div>
                             {% endfor %}
                         </div>
-                    {% endfor %}
+                        {% for week in calendar_info.week_sublists %}
+                            <div class="week">
+                                {% for day in week %}
+                                    <div class="cell {% if current_day == day %}today{% endif %}">{% if day != 0 %}{{ day }}{% endif %}</div>
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="todo">
+                    hello todo list
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+
+        function adjustMonth(offset) {
+            let monthInput = document.getElementById('filterYearMonth').querySelector('[name="month"]');
+            let yearInput = document.getElementById('filterYearMonth').querySelector('[name="year"]');
+        
+            if (offset === null || offset === undefined) {
+                setToCurrentMonthAndYear(monthInput, yearInput);
+            } else {
+                updateMonthAndYear(monthInput, yearInput, offset);
+            }
+        
+            submitForm('filterYearMonth');
+        }
+        
+        function setToCurrentMonthAndYear(monthInput, yearInput) {
+            monthInput.value = new Date().getMonth() + 1; // Months are zero-indexed in JavaScript, so add 1
+            yearInput.value = new Date().getFullYear();
+        }
+        
+        function updateMonthAndYear(monthInput, yearInput, offset) {
+            let monthValue = parseInt(monthInput.value);
+            let yearValue = parseInt(yearInput.value);
+            let newMonth = monthValue + offset;
+        
+            if (newMonth < 1) {
+                let newYear = yearValue - 1;
+                setMonthAndYear(monthInput, yearInput, 12, newYear);
+            } else if (newMonth > 12) {
+                let newYear = yearValue + 1;
+                setMonthAndYear(monthInput, yearInput, 1, newYear);
+            } else {
+                setMonthAndYear(monthInput, yearInput, newMonth, yearValue);
+            }
+        }
+        
+        function setMonthAndYear(monthInput, yearInput, newMonth, newYear) {
+            monthInput.value = newMonth;
+            yearInput.value = newYear;
+        }
+        
+        function submitForm(formId) {
+            document.getElementById(formId).submit();
+        }
+        
+    </script>
 </body>

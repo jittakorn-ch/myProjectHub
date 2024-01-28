@@ -9,6 +9,11 @@
 // 650 - 850
 // < 650
 
+.title {
+    font-size: 24px;
+    font-weight: 400;
+}
+
 .project {
     width: 100%;
     display: flex;
@@ -30,48 +35,115 @@
         }
     }
 
+    .button {
+        width: 34px;
+        height: 34px;
+        background-color: rgb(255, 255, 255);
+        border-radius: 10px;
+        box-shadow: 0 16px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+
+        &:hover {
+            transform: scale(1.2);
+            background-color: skyblue;
+        }
+    }
+
+    .calendar-filter {
+        margin: 10px 0px 20px 0px;
+        display: flex;
+
+        .year-month {
+            display: inline-flex;
+            gap: 10px;
+
+            .year-input {
+                width: 80px;
+                line-height: 34px;
+
+                & input {
+                    width: 100%;
+                    line-height: 32px;
+                    border: none;
+                    border-radius: 10px;
+                    text-align: center;
+                }
+            }
+        }
+
+        .month-display {
+            width: 120px;
+            height: 34px;
+            background-color: rgb(255, 255, 255);
+            border-radius: 10px;
+            box-shadow: 0 16px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+
     .todolist {
         width: 100%;
         padding: 20px;
+        display: flex;
 
         .calendar {
-            width: 100%;
+            width: 60%;
 
-            .calendar-header {
-                display: flex;
+            .calendar-table {
+                width: 100%;
+
+                .calendar-header {
+                    display: flex;
+
+                    .cell {
+                        height: 30px;
+                    }
+                }
+
+                .week,
+                .calendar-header {
+                    width: 100%;
+                    display: flex;
+                    border-right: 0.5px solid #000;
+                    &.week:last-child {
+                        border-bottom: 0.5px solid #000;
+                    }
+                }
 
                 .cell {
-                    height: 30px;
+                    width: calc(100% / 7);
+                    height: 100px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    padding: 5px;
+                    box-sizing: border-box;
+                    border: 0.5px solid #000;
+                    border-right: 0;
+                    border-bottom: 0;
+
+                    &.cell:first-child,
+                    &.cell:last-child{
+                        background-color: gray;
+                    }
+                }
+
+                .today {
+                    background-color: #73a8d8 !important;
+                    color: blue;
+                    font-size: 20;
+                    font-weight: 400;
                 }
             }
+        }
 
-            .week,
-            .calendar-header {
-                width: 100%;
-                display: flex;
-                border-right: 0.5px solid #000;
-                &.week:last-child {
-                    border-bottom: 0.5px solid #000;
-                }
-            }
-
-            .cell {
-                width: calc(100% / 7);
-                height: 100px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                padding: 5px;
-                box-sizing: border-box;
-                border: 0.5px solid #000;
-                border-right: 0;
-                border-bottom: 0;
-
-                &.cell:first-child,
-                &.cell:last-child{
-                    background-color: gray;
-                }
-            }
+        .todo {
+            width: 40%;
         }
     }
 }
