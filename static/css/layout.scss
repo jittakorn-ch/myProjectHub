@@ -1,3 +1,5 @@
+@import "base_color.scss";
+
 * {
     font-family: "kanit" !important;
     font-weight: 300;
@@ -6,12 +8,14 @@
 
 html {
     height: 100%;
+    background: $gray;
 }
 
 body {
     margin: 0;
     line-height: 1;
-    background-color: rgb(250, 250, 250);
+    background-color: $white;
+    box-sizing: border-box;
 }
 
 .header {
@@ -22,12 +26,33 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background-color: $primary-color;
 
     .topnav {
         display: flex;
-        gap: 60px;
-        padding: 20px;
+        width: 40vw;
+        height: 100%;
+        color: $white;
         margin-right: 40px;
+        justify-content: flex-end;
+
+        a {
+            text-decoration: none;
+            width: calc(100% / 4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+            color: unset;
+            &:hover {
+                color: $hover-color;
+            }
+        }
+
+        .active {
+            background-color: $red-color;
+            color: $drak-green;
+        }
     }
 
     .logo {
@@ -54,7 +79,6 @@ body {
 .body {
     position: absolute;
     top: 70px;
-    height: calc(100% - 70px);
     width: 100%;
     overflow-y: auto;
 

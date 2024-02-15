@@ -5,9 +5,9 @@
         <img src="{% static 'img/logo-image.png' %}" alt="Page Logo">
     </a>
     <div class="topnav">
-        <a href="{% url 'home' %}">HOME</a>
-        <a href="{% url 'project:project' %}">PROJECT</a>
-        <div>PROFILE</div>
-        <div>CONTACT</div>
+        <a href="{% url 'home' %}" class="{% if navbarTab == 'home' %}active{% endif %}">HOME</a>
+        <a href="{% url 'project:project' %}" class="{% if navbarTab == 'project' %}active{% endif %}">PROJECT</a>
+        <a>PROFILE</a>
+        <a>CONTACT</a>
     </div>
 </div>

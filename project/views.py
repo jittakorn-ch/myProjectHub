@@ -29,7 +29,10 @@ def get_calendar_info(year=None, month=None):
     return calendar_info
 
 def project(request):
-    return render(request, 'project/index.html')
+    context = {
+        'navbarTab': 'project'
+    }
+    return render(request, 'project/index.html', context)
 
 def todolist(request):
     today = datetime.now()
@@ -40,9 +43,8 @@ def todolist(request):
     month_name = datetime(year, month, 1).strftime('%B')
     current_day = None
     dummy_date = date(year, month, 1)
-    if today.month == dummy_date.month:
+    if today.month == dummy_date.month and today.year == dummy_date.year:
         current_day = today.day
-    print('===', current_day)
 
     context = {
         'calendar_info': calendar_info,
@@ -51,7 +53,8 @@ def todolist(request):
         'filters': {
             'year': year,
             'month': month,
-        }
+        },
+        'navbarTab': 'project'
     }
 
     return render(request, 'project/todolist.html', context)
