@@ -1,3 +1,9 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import TodoList
+
+class TodoListAdmin(admin.ModelAdmin):
+    list_display = ['todo_id', 'subject', 'description', 'date_start', 'date_end', 'is_completed']
+
+
+admin.site.register(TodoList, TodoListAdmin)

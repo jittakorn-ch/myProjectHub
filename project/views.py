@@ -1,6 +1,9 @@
 from django.shortcuts import render
+from django.urls import reverse
 from datetime import datetime, date
 import calendar
+from project.models import TodoList
+from django.http import HttpResponseRedirect
 
 def get_calendar_info(year=None, month=None):
     if year is None or month is None:
@@ -46,6 +49,8 @@ def todolist(request):
     if today.month == dummy_date.month and today.year == dummy_date.year:
         current_day = today.day
 
+    todo_model = TodoList.objects.all()
+
     context = {
         'calendar_info': calendar_info,
         'month_name': month_name,
@@ -54,7 +59,31 @@ def todolist(request):
             'year': year,
             'month': month,
         },
+        'todo_model': todo_model,
         'navbarTab': 'project'
     }
 
     return render(request, 'project/todolist.html', context)
+
+def todolistAdd(request):
+    if request.method != 'POST':
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', reverse('project:todolist')))
+    else:
+        date_start_str = request.POST.get('date_start', None)
+        date_end_str = request.POST.get('date_end', None)
+        subject = request.POST.get('subject', '')
+        description = request.POST.get('description', '')
+
+        # Convert date strings to datetime objects or set to None if empty
+        date_start = datetime.strptime(date_start_str, '%Y-%m-%d %H:%M:%S') if date_start_str else None
+        date_end = datetime.strptime(date_end_str, '%Y-%m-%d %H:%M:%S') if date_end_str else None
+
+        todo = TodoList(
+            date_start=date_start,
+            date_end=date_end,
+            subject=subject,
+            description=description
+        )
+        todo.save()
+
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', reverse('project:todolist')))

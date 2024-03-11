@@ -8,7 +8,7 @@
 
 html {
     height: 100%;
-    background: $gray;
+    background: $gray-bg;
 }
 
 body {
@@ -80,11 +80,23 @@ body {
     position: absolute;
     top: 70px;
     width: 100%;
-    overflow-y: auto;
+    height: calc(100vh - 70px);
 
     .test {
         height: 3000px;
         width: 100%;
     }
+}
 
+.hidden {
+    display: none !important;
+}
+
+.flex-end {
+    display: flex !important;
+    justify-content: flex-end !important;
+}
+
+.w50 {
+    width: 50% !important;
 }

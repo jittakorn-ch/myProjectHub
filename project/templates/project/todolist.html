@@ -16,10 +16,10 @@
         {% include 'header.html' %}
     </nav>
     <div class="body">
-        <div class="project todolist">
+        <div class="project">
             <div class="todolist">
                 <div class="calendar">
-                    <div class="calendar-filter">
+                    <div class="filter calendar-feature">
                         <form id="filterYearMonth" action="{% url 'project:todolist' %}" method='post'>
                             {% csrf_token %}
                             <div class="year-month">
@@ -49,6 +49,14 @@
                                 </div> 
                             </div>
                         </form>
+                        <div class="button-feature">
+                            <div class="button" onclick="openModal('modalAddOrEdit')">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" />
+                                    <path d="M5 12l14 0" />
+                                </svg>
+                            </div> 
+                        </div>
                     </div>
                     <div class="calendar-table">
                         <div class="calendar-header">
@@ -68,9 +76,58 @@
                     </div>
                 </div>
                 <div class="todo">
-                    hello todo list
+                    <div class="filter">
+                        filters
+                    </div>
+                    <div class="todo-detail">
+                        {% for todo in todo_model %}
+                            <div class="item">
+                                <div class="subject">Subject:</div>
+                                <div>{{ todo.subject }}</div>
+                                <div class="subject">Description:</div>
+                                <div>{{ todo.description }}</div>
+                            </div>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
+
+            <modal id="modalAddOrEdit" class="modal hidden">
+                <div class="close-modal" onclick="closeModal('modalAddOrEdit')"></div>
+                <div class="modal-body">
+                    <div class="close-modal-x" onclick="closeModal('modalAddOrEdit')">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M18 6l-12 12" /><path d="M6 6l12 12" />
+                        </svg>
+                    </div>
+                    <div class="modal-content">
+                        <div class="modal-title">Add todo list</div>
+                        <form id="addOrEdit" method="post" action="">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="w50">
+                                    <input class="date_start" name="date_start" type="datetime-local" placeholder=" ">
+                                    <label>Start date</label>
+                                </div>
+                                <div class="w50">       
+                                    <input class="date_end" name="date_end" type="datetime-local" placeholder=" ">
+                                    <label>End date</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <input class="subject" name="subject" type="text" maxlength="256" placeholder=" ">
+                                <label>Subject</label>
+                            </div>
+                            <div class="row">
+                                <textarea class="description" name="description" maxlength="512" placeholder=" "></textarea>
+                                <label>Description</label>
+                            </div>
+                        </form>
+                        <button onclick="addOrEdit('addOrEdit')">Add</button>
+                    </div>
+                </div>
+            </modal>
         </div>
     </div>
 
@@ -117,6 +174,22 @@
         
         function submitForm(formId) {
             document.getElementById(formId).submit();
+        }
+
+        function openModal(modalId) {
+            let modal = document.getElementById(modalId);
+            let form = document.getElementById('addOrEdit');
+            form.action = '{% url "project:todolistAdd" %}'
+            modal.classList.remove('hidden');
+        }
+
+        function closeModal(modalId) {
+            let form = document.getElementById(modalId);
+            form.classList.add('hidden');
+        }
+
+        function addOrEdit(formId) {
+            submitForm(formId);
         }
         
     </script>
